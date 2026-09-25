@@ -350,10 +350,6 @@
 
 <main id="cards"></main>
 
-  <center><div>
-  Views: <span id="views">...</span>
-</div></center>
-
 <footer>
   © 2026 klasa 2T — wszystkie prawa fińsko-zastrzeżone<br>
   zrobione z sisu 🇫🇮
@@ -510,18 +506,6 @@ shuffleBtn.addEventListener('click', () => {
     target.addEventListener('click', () => target.classList.remove('picked'), { once: true });
   }
 });
-
-
-
-
-  fetch('https://api.counterapi.dev/v1/2t-finskie-slowka/views/up')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('views').textContent = data.count;
-    })
-    .catch(() => {
-      document.getElementById('views').textContent = '0';
-    });
 
 
 render();
