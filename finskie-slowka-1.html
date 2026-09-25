@@ -511,13 +511,18 @@ shuffleBtn.addEventListener('click', () => {
   }
 });
 
-  const key = "my-website";
 
-  fetch(`https://api.countapi.xyz/hit/${key}/views`)
+
+
+  fetch('https://api.counterapi.dev/v1/2t-finskie-slowka/views/up')
     .then(res => res.json())
     .then(data => {
-      document.getElementById("views").textContent = data.value;
+      document.getElementById('views').textContent = data.count;
+    })
+    .catch(() => {
+      document.getElementById('views').textContent = '0';
     });
+
 
 render();
 updateProgress();
