@@ -157,9 +157,36 @@
   }
   .card.open .hint{ display:none; }
 
+  .video-spot{
+    max-width:640px;
+    margin:-30px auto 0;
+    padding:0 16px;
+    position:relative;
+    z-index:3;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .video-frame{
+    width:260px;
+    max-width:75%;
+    aspect-ratio:16/9;
+    border-radius:14px;
+    border:3px solid var(--paper);
+    box-shadow:0 1px 2px rgba(11,37,69,.08), 0 10px 22px -12px rgba(11,37,69,.3);
+    background:#000;
+    display:block;
+  }
+  .video-caption{
+    margin:8px 0 0;
+    font-size:11px;
+    color:var(--muted);
+    text-align:center;
+  }
+
   .toolbar{
     max-width:640px;
-    margin:-26px auto 0;
+    margin:20px auto 0;
     padding:0 16px;
     position:relative;
     z-index:3;
@@ -300,6 +327,14 @@
   <div class="flag"><span></span><span></span><span></span></div>
   <h1>Fińskie słówka, których nie da się przetłumaczyć</h1>
   <p>Kliknij słówko, żeby zobaczyć, co naprawdę znaczy. Spoiler: Finowie mają słowo na wszystko.</p>
+</div>
+
+<div class="video-spot">
+  <video class="video-frame" controls preload="none" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%23DCEBFB'/></svg>">
+    <source src="video.mp4" type="video/mp4">
+    Twoja przeglądarka nie obsługuje wideo.
+  </video>
+  <p class="video-caption">wstaw plik „video.mp4” obok tego pliku html</p>
 </div>
 
 <div class="toolbar">
@@ -476,3 +511,4 @@ updateProgress();
 
 </body>
 </html>
+
