@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fińskie słówka, które nie mają sensu (Uzywac na Light modzie pls)</title>
+<title>Fińskie słówka, które nie mają sensu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,6 +16,9 @@
     --paper:#FFFFFF;
     --ink:#12233B;
     --muted:#5A6B82;
+    --heading:#0B2545;
+    --featured-bg:linear-gradient(180deg,#FFFFFF 0%, #E7F1FA 100%);
+    --featured-border:#BFD9F5;
     box-sizing:border-box;
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
@@ -102,8 +105,8 @@
     -webkit-tap-highlight-color:transparent;
   }
   .card.featured{
-    border:1px solid #BFD9F5;
-    background:linear-gradient(180deg,#FFFFFF 0%, var(--ice) 100%);
+    border:1px solid var(--featured-border);
+    background:var(--featured-bg);
   }
   .card:active{ transform:scale(.985); }
   .card-top{
@@ -117,7 +120,7 @@
     font-family:'Fraunces',serif;
     font-weight:700;
     font-size:20px;
-    color:var(--navy);
+    color:var(--heading);
     line-height:1.25;
   }
   .say-it{
@@ -185,7 +188,7 @@
     border-radius:12px;
     border:1px solid #E7ECF3;
     background:var(--paper);
-    color:var(--navy);
+    color:var(--heading);
     font-size:14px;
     font-weight:600;
     font-family:'Inter',system-ui,sans-serif;
@@ -265,16 +268,29 @@
       --ink:#E7EEF7;
       --muted:#8FA3BE;
       --navy:#0B2545;
+      --heading:#DCEBFB;
+      --blue:#6FA8E0;
+      --featured-bg:linear-gradient(180deg,#1B2C46 0%, #1F3350 100%);
+      --featured-border:#2E4870;
     }
     body{ background:var(--snow); }
     .card{ border-color:#233855; box-shadow:none; }
     .hero::after{ background:var(--snow); }
+    #search, #shuffle{ border-color:#233855; box-shadow:none; }
+    #search::placeholder{ color:#6F84A0; }
+    .progress-track{ background:#233855; }
+    footer strong{ color:var(--heading); }
   }
   :root[data-theme="dark"]{
     --snow:#0E1A2B;
     --paper:#16243A;
     --ink:#E7EEF7;
     --muted:#8FA3BE;
+    --navy:#0B2545;
+    --heading:#DCEBFB;
+    --blue:#6FA8E0;
+    --featured-bg:linear-gradient(180deg,#1B2C46 0%, #1F3350 100%);
+    --featured-border:#2E4870;
   }
 </style>
 </head>
@@ -309,6 +325,12 @@ const words = [
     say: "kaks-te pa-ras lu-ok-ka",
     literal: "dosł. „2T najlepsza klasa”",
     meaning: "Tłumaczenie: 2T najlepsza jest."
+  },
+  {
+    fi: "Oikeat ihmiset oikeassa paikassa",
+    say: "oj-ke-at ih-mi-set oj-ke-as-sa pai-kas-sa",
+    literal: "dosł. „właściwi ludzie we właściwym miejscu”",
+    meaning: "Tak właśnie jest z 2T — każdy na swoim miejscu."
   },
   {
     fi: "Kalsarikänni",
