@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fińskie słówka, które nie mają sensu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --ice:#E7F1FA;
+    --blue:#1E5AA8;
+    --snow:#F7FAFC;
+    --paper:#FFFFFF;
+    --ink:#12233B;
+    --muted:#5A6B82;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{margin:0;height:100%;}
+  body{
+    background:var(--snow);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .hero{
+    background:linear-gradient(180deg,var(--navy) 0%, #123a68 100%);
+    color:var(--ice);
+    padding:48px 20px 60px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-1px;
+    height:36px;
+    background:var(--snow);
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .flag{
+    display:inline-flex;
+    gap:4px;
+    margin-bottom:18px;
+  }
+  .flag span{
+    width:8px;height:8px;border-radius:50%;background:var(--ice);opacity:.85;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:clamp(26px,7.5vw,44px);
+    line-height:1.15;
+    margin:0 0 12px;
+    max-width:20ch;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .hero p{
+    max-width:34ch;
+    margin:0 auto;
+    color:#B9CFE8;
+    font-size:14.5px;
+    line-height:1.6;
+  }
+  .badge{
+    display:inline-block;
+    margin:22px auto 0;
+    padding:8px 18px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(185,207,232,.35);
+    border-radius:999px;
+    color:#DCEBFB;
+    font-size:12.5px;
+    font-weight:500;
+    letter-spacing:.01em;
+  }
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 16px 36px;
+    margin-top:-26px;
+    position:relative;
+    z-index:2;
+  }
+  .card{
+    background:var(--paper);
+    border-radius:14px;
+    padding:18px 16px;
+    margin-bottom:10px;
+    box-shadow:0 1px 2px rgba(11,37,69,.06), 0 8px 20px -12px rgba(11,37,69,.15);
+    border:1px solid #E7ECF3;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .card.featured{
+    border:1px solid #BFD9F5;
+    background:linear-gradient(180deg,#FFFFFF 0%, var(--ice) 100%);
+  }
+  .card:active{ transform:scale(.985); }
+  .card-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .fi-word{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--navy);
+    line-height:1.25;
+  }
+  .say-it{
+    font-size:12px;
+    color:var(--muted);
+    padding-top:3px;
+    text-align:right;
+  }
+  .literal{
+    margin-top:7px;
+    font-size:13px;
+    color:var(--blue);
+    font-weight:500;
+    line-height:1.4;
+  }
+  .meaning{
+    margin-top:9px;
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .28s ease, opacity .28s ease, margin-top .28s ease;
+  }
+  .card.open .meaning{
+    max-height:140px;
+    opacity:1;
+  }
+  .hint{
+    font-size:11px;
+    color:#9AACC2;
+    margin-top:6px;
+  }
+  .card.open .hint{ display:none; }
+
+  .toolbar{
+    max-width:640px;
+    margin:-26px auto 0;
+    padding:0 16px;
+    position:relative;
+    z-index:3;
+    display:flex;
+    gap:8px;
+  }
+  #search{
+    flex:1;
+    min-width:0;
+    padding:13px 14px;
+    border-radius:12px;
+    border:1px solid #E7ECF3;
+    background:var(--paper);
+    color:var(--ink);
+    font-size:15px;
+    font-family:'Inter',system-ui,sans-serif;
+    box-shadow:0 1px 2px rgba(11,37,69,.06), 0 8px 20px -12px rgba(11,37,69,.15);
+  }
+  #search:focus{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+  #shuffle{
+    flex-shrink:0;
+    padding:13px 16px;
+    border-radius:12px;
+    border:1px solid #E7ECF3;
+    background:var(--paper);
+    color:var(--navy);
+    font-size:14px;
+    font-weight:600;
+    font-family:'Inter',system-ui,sans-serif;
+    box-shadow:0 1px 2px rgba(11,37,69,.06), 0 8px 20px -12px rgba(11,37,69,.15);
+    cursor:pointer;
+  }
+  #shuffle:active{ transform:scale(.96); }
+
+  .progress-wrap{
+    max-width:640px;
+    margin:14px auto 4px;
+    padding:0 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .progress-track{
+    flex:1;
+    height:6px;
+    background:#E1E9F2;
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--blue);
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+  .progress-text{
+    font-size:11.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .no-results{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    padding:30px 20px;
+  }
+  .card.picked{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(30,90,168,.18), 0 8px 20px -12px rgba(11,37,69,.25);
+    animation:picked-pulse 1s ease;
+  }
+  @keyframes picked-pulse{
+    0%{ box-shadow:0 0 0 0 rgba(30,90,168,.35); }
+    100%{ box-shadow:0 0 0 3px rgba(30,90,168,.18), 0 8px 20px -12px rgba(11,37,69,.25); }
+  }
+  footer{
+    text-align:center;
+    padding:28px 20px 40px;
+    color:var(--muted);
+    font-size:12.5px;
+    line-height:1.7;
+  }
+  footer strong{ color:var(--navy); }
+
+  @media (max-width:380px){
+    .hero{ padding:40px 16px 52px; }
+    h1{ font-size:24px; }
+    .fi-word{ font-size:18px; }
+    .card{ padding:16px 14px; }
+  }
+  @media (hover:hover){
+    .card:hover{
+      box-shadow:0 2px 4px rgba(11,37,69,.08), 0 14px 28px -14px rgba(11,37,69,.22);
+      transform:translateY(-1px);
+    }
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --snow:#0E1A2B;
+      --paper:#16243A;
+      --ink:#E7EEF7;
+      --muted:#8FA3BE;
+      --navy:#0B2545;
+    }
+    body{ background:var(--snow); }
+    .card{ border-color:#233855; box-shadow:none; }
+    .hero::after{ background:var(--snow); }
+  }
+  :root[data-theme="dark"]{
+    --snow:#0E1A2B;
+    --paper:#16243A;
+    --ink:#E7EEF7;
+    --muted:#8FA3BE;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="flag"><span></span><span></span><span></span></div>
+  <h1>Fińskie słówka, których nie da się przetłumaczyć</h1>
+  <p>Kliknij słówko, żeby zobaczyć, co naprawdę znaczy. Spoiler: Finowie mają słowo na wszystko.</p>
+</div>
+
+<div class="toolbar">
+  <input id="search" type="text" placeholder="Szukaj słówka…" autocomplete="off">
+  <button id="shuffle" type="button">Losuj</button>
+</div>
+<div class="progress-wrap">
+  <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+  <span id="progressText" class="progress-text">0 / 0 odkrytych</span>
+</div>
+
+<main id="cards"></main>
+
+<footer>
+  © 2026 klasa 2T — wszystkie prawa fińsko-zastrzeżone<br>
+  zrobione z sisu 🇫🇮
+</footer>
+
+<script>
+const words = [
+  {
+    fi: "2T paras luokka",
+    say: "kaks-te pa-ras lu-ok-ka",
+    literal: "dosł. „2T najlepsza klasa”",
+    meaning: "Tłumaczenie: 2T najlepsza jest."
+  },
+  {
+    fi: "Kalsarikänni",
+    say: "kal-sa-ri-kän-ni",
+    literal: "dosł. „pijaństwo w kalesonach”",
+    meaning: "Picie w domu, samemu, w bieliźnie, bez zamiaru wychodzenia gdziekolwiek. Oficjalny fiński styl życia."
+  },
+  {
+    fi: "Myötähäpeä",
+    say: "myö-tä-hä-pe-ä",
+    literal: "dosł. „wstyd razem z kimś”",
+    meaning: "To uczucie, gdy ktoś się kompromituje, a ty czujesz się zażenowany za niego."
+  },
+  {
+    fi: "Poronkusema",
+    say: "po-ron-ku-se-ma",
+    literal: "dosł. „siusiu renifera”",
+    meaning: "Jednostka odległości — dystans, jaki renifer przejdzie zanim zatrzyma się, żeby się załatwić. Ok. 7,5 km."
+  },
+  {
+    fi: "Sisu",
+    say: "si-su",
+    literal: "brak dosłownego tłumaczenia",
+    meaning: "Fińska wytrwałość i upór, gdy wszystko idzie źle, a ty i tak to robisz. Narodowa cnota."
+  },
+  {
+    fi: "Löyly",
+    say: "lö-y-ly",
+    literal: "dosł. „para z kamieni”",
+    meaning: "Para unosząca się po polaniu wodą rozgrzanych kamieni w saunie. Święte słowo dla każdego Fina."
+  },
+  {
+    fi: "Ei kiitos",
+    say: "ej ki-i-tos",
+    literal: "dosł. „nie, dziękuję”",
+    meaning: "Najczęściej używane zdanie w Finlandii. Grzeczna odmowa wszystkiego, zawsze i wszędzie."
+  },
+  {
+    fi: "Perkele",
+    say: "per-ke-le",
+    literal: "dosł. „diabeł”",
+    meaning: "Najsłynniejsze fińskie przekleństwo. Używane, gdy uderzysz się w palec albo internet znowu nie działa."
+  },
+  {
+    fi: "Kaamos",
+    say: "kaa-mos",
+    literal: "dosł. „polarna noc”",
+    meaning: "Okres zimą, gdy słońce w ogóle nie wschodzi. Finowie mają na to osobne słowo, bo dzieje się to co roku."
+  },
+  {
+    fi: "Jokamiehenoikeus",
+    say: "jo-ka-mie-hen-oj-ke-us",
+    literal: "dosł. „prawo każdego człowieka”",
+    meaning: "Prawo do chodzenia po dowolnym lesie, zbierania grzybów i rozbicia namiotu na cudzej ziemi. Legalnie."
+  },
+  {
+    fi: "Ruuhkavuodet",
+    say: "ruuh-ka-vu-o-det",
+    literal: "dosł. „lata korków (ulicznych)”",
+    meaning: "Określenie na wiek 25–40 lat, kiedy człowiek próbuje ogarnąć pracę, dzieci i kredyt jednocześnie."
+  },
+];
+
+const main = document.getElementById('cards');
+const searchInput = document.getElementById('search');
+const shuffleBtn = document.getElementById('shuffle');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+
+let discovered = new Set();
+try{
+  const saved = JSON.parse(localStorage.getItem('fi_discovered') || '[]');
+  discovered = new Set(saved);
+}catch(e){ discovered = new Set(); }
+
+function saveDiscovered(){
+  try{ localStorage.setItem('fi_discovered', JSON.stringify([...discovered])); }catch(e){}
+}
+
+function updateProgress(){
+  const total = words.length;
+  const found = [...discovered].filter(i => i < total).length;
+  progressBar.style.width = total ? (found/total*100) + '%' : '0%';
+  progressText.textContent = found + ' / ' + total + ' odkrytych';
+}
+
+function render(filterText){
+  main.innerHTML = '';
+  const q = (filterText || '').trim().toLowerCase();
+  const filtered = words
+    .map((w, i) => ({...w, i}))
+    .filter(w => !q || w.fi.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q));
+
+  if(filtered.length === 0){
+    main.innerHTML = '<div class="no-results">Brak słówek pasujących do „' + filterText + '”</div>';
+    return;
+  }
+
+  filtered.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'card' + (w.i === 0 ? ' featured' : '') + (discovered.has(w.i) ? ' open' : '');
+    card.dataset.index = w.i;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="fi-word">${w.fi}</span>
+        <span class="say-it">${w.say}</span>
+      </div>
+      <div class="literal">${w.literal}</div>
+      <div class="meaning">${w.meaning}</div>
+      <div class="hint">dotknij, żeby zobaczyć znaczenie ↓</div>
+    `;
+    card.addEventListener('click', () => {
+      card.classList.toggle('open');
+      if(card.classList.contains('open')){ discovered.add(w.i); }
+      else{ discovered.delete(w.i); }
+      saveDiscovered();
+      updateProgress();
+    });
+    main.appendChild(card);
+  });
+}
+
+searchInput.addEventListener('input', () => render(searchInput.value));
+
+shuffleBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  render();
+  const i = Math.floor(Math.random() * words.length);
+  const target = main.querySelector('[data-index="' + i + '"]');
+  if(target){
+    target.classList.add('open', 'picked');
+    discovered.add(i);
+    saveDiscovered();
+    updateProgress();
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.addEventListener('click', () => target.classList.remove('picked'), { once: true });
+  }
+});
+
+render();
+updateProgress();
+</script>
+
+</body>
+</html>
