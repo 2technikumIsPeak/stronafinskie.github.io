@@ -337,6 +337,10 @@
   </video>
 </div>
 
+<div>
+  Views: <span id="views">...</span>
+</div>
+
 <div class="toolbar">
   <input id="search" type="text" placeholder="Szukaj słówka…" autocomplete="off">
   <button id="shuffle" type="button">Losuj</button>
@@ -504,6 +508,14 @@ shuffleBtn.addEventListener('click', () => {
     target.addEventListener('click', () => target.classList.remove('picked'), { once: true });
   }
 });
+
+  const key = "my-website";
+
+  fetch(`https://api.countapi.xyz/hit/${key}/views`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("views").textContent = data.value;
+    });
 
 render();
 updateProgress();
